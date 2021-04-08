@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <title>
     
-  💾Tensorflow 持久化和读取模型 - Mose
+  docker 导出image - Mose
   
 
   </title>
@@ -79,19 +79,13 @@ $(document).ready(function(event) {
 <div>
 	<article class="hentry" role="article">
 	<header>
-			  	<h1 class="entry-title">💾Tensorflow 持久化和读取模型</h1>
-				<p class="meta"><time datetime="2021-01-19T17:50:12+08:00" pubdate data-updated="true">2021/01/19</time></p>
+			  	<h1 class="entry-title">docker 导出image</h1>
+				<p class="meta"><time datetime="2021-03-07T01:49:25+08:00" pubdate data-updated="true">2021/03/07</time></p>
 			 </header>
 		  	<div class="entry-content">
-			  	<pre class="line-numbers"><code class="language-python"> self.checkpoint = tf.train.Checkpoint(
-      optimizer=self.optimizer,
-      encoder=self.encoder,
-      decoder=self.decoder
-)
-self.checkpoint_prefix = os.path.join(self.args.checkpoint_dir, &quot;ckpt&quot;)
-self.checkpoint_dir = self.args.checkpoint_dir
-self.ckpt_manager = tf.train.CheckpointManager(self.checkpoint, directory=self.checkpoint_dir, max_to_keep=3)
-</code></pre>
+			  	<p>docker save 9045 &gt; tomcat8-apr.tar</p>
+
+<p>docker load &lt; tomcat8-apr.tar</p>
 
 			</div>
 
@@ -119,12 +113,9 @@ self.ckpt_manager = tf.train.CheckpointManager(self.checkpoint, directory=self.c
 
 	    <p class="meta">
 	    
-	        <a class="basic-alignment left" href="16118468907007.html" 
-	        title="Previous Post: iCloud 与 Google one 云存储价格对比">&laquo; iCloud 与 Google one 云存储价格对比</a>
 	    
-	    
-	        <a class="basic-alignment right" href="16110375340640.html" 
-	        title="Next Post: 🕺使用Docker 快速建立samba服务">🕺使用Docker 快速建立samba服务 &raquo;</a>
+	        <a class="basic-alignment right" href="16133412208066.html" 
+	        title="Next Post: ubuntu20.04 关闭/开启图形界面">ubuntu20.04 关闭/开启图形界面 &raquo;</a>
 	    
 	    </p>
 	  </footer>
@@ -205,8 +196,6 @@ self.ckpt_manager = tf.train.CheckpointManager(self.checkpoint, directory=self.c
 
 
 
-
-<script src="asset/prism.js"></script>
 
 
 <style type="text/css">

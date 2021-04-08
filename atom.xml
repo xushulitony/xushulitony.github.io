@@ -4,7 +4,7 @@
   <title><![CDATA[Mose]]></title>
   <link href="xushulitony.github.io/atom.xml" rel="self"/>
   <link href="xushulitony.github.io/"/>
-  <updated>2021-04-09T05:17:58+08:00</updated>
+  <updated>2021-04-09T05:28:12+08:00</updated>
   <id>xushulitony.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -12,6 +12,19 @@
   </author>
   <generator uri="http://www.coderforart.com/">CoderForArt</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[docker 导出image]]></title>
+    <link href="xushulitony.github.io/16150529659016.html"/>
+    <updated>2021-03-07T01:49:25+08:00</updated>
+    <id>xushulitony.github.io/16150529659016.html</id>
+    <content type="html"><![CDATA[
+<p>docker save 9045 &gt; tomcat8-apr.tar</p>
+
+<p>docker load &lt; tomcat8-apr.tar</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[ubuntu20.04 关闭/开启图形界面]]></title>
