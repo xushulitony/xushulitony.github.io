@@ -7,12 +7,12 @@
   <meta charset="utf-8">
   <title>
     
-  Mose
+  配置frp进行内网穿透 - Mose
   
 
   </title>
   <meta name="author" content="">
-  <meta name="description" content="Personal Website">
+  <meta name="description" content="Technique worth spreding">
 
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
@@ -46,7 +46,7 @@ $(document).ready(function(event) {
   <header role="banner"><hgroup>
   <h1><a href="index.html">Mose</a></h1>
   
-    <h2>Personal Website</h2>
+    <h2>Technique worth spreding</h2>
   
 </hgroup>
 
@@ -65,51 +65,25 @@ $(document).ready(function(event) {
   
 <ul class="main-navigation">
 
-  <li id=""><a target="self" href="index.html">Home</a></li>
+  <li id=""><a target="_self" href="index.html">Home</a></li>
 
   <li id=""><a target="_self" href="archives.html">Archives</a></li>
+
+  <li id=""><a target="_self" href="me.html">Me</a></li>
 
 </ul>
 
 </nav>
   <div id="main">
     <div id="content"> 
-<div class="blog-index">
-
-	<article>
-		 <header>
-		  	<h1 class="entry-title"><a href="16133412208066.html">ubuntu20.04 关闭/开启图形界面</a></h1>
-			<p class="meta"><time datetime="2021-02-15T06:20:20+08:00" 
-			pubdate data-updated="true">2021/02/15</time></p>
-		 </header>
-	  	<div class="entry-content">
-		  	
-		  	<p>关闭用户图形界面，使用tty登录。</p>
-
-<p>sudo systemctl set-default multi-user.target<br/>
-sudo reboot</p>
-
-<p>开启用户图形界面。</p>
-
-<p>sudo systemctl set-default graphical.target<br/>
-sudo reboot</p>
-
-
-		</div>
-
-		
-
-	</article>
- 
-	<article>
-		 <header>
-		  	<h1 class="entry-title"><a href="16122988687455.html">配置frp进行内网穿透</a></h1>
-			<p class="meta"><time datetime="2021-02-03T04:47:48+08:00" 
-			pubdate data-updated="true">2021/02/03</time></p>
-		 </header>
-	  	<div class="entry-content">
-		  	
-		  	<p>frp 是一个可用于内网穿透的高性能的反向代理应用，支持 tcp, udp 协议，为 http 和 https 应用协议提供了额外的能力，且尝试性支持了点对点穿透。</p>
+<div>
+	<article class="hentry" role="article">
+	<header>
+			  	<h1 class="entry-title">配置frp进行内网穿透</h1>
+				<p class="meta"><time datetime="2021-02-03T04:47:48+08:00" pubdate data-updated="true">2021/02/03</time></p>
+			 </header>
+		  	<div class="entry-content">
+			  	<p>frp 是一个可用于内网穿透的高性能的反向代理应用，支持 tcp, udp 协议，为 http 和 https 应用协议提供了额外的能力，且尝试性支持了点对点穿透。</p>
 
 <p>为了方便在不同的系统中安装和配置frp，我基于docker对frp server、client进行了封装和打包。</p>
 
@@ -117,19 +91,19 @@ sudo reboot</p>
 
 <p>frp server</p>
 
-<pre><code class="language-bash">docker pull ryaning/frps
+<pre class="line-numbers"><code class="language-bash">docker pull ryaning/frps
 </code></pre>
 
 <p>frp client</p>
 
-<pre><code class="language-bash">docker pull ryaning/frpc
+<pre class="line-numbers"><code class="language-bash">docker pull ryaning/frpc
 </code></pre>
 
 <h2 id="toc_1">使用</h2>
 
 <h3 id="toc_2">服务器配置文件</h3>
 
-<pre><code class="language-text">mkdir -p /etc/frp/
+<pre class="line-numbers"><code class="language-text">mkdir -p /etc/frp/
 touch /etc/frp/frps.ini
 
 cat &gt; /etc/frp/frps.ini &lt;&lt; EOF
@@ -140,12 +114,12 @@ EOF
 
 <h3 id="toc_3">启动服务端</h3>
 
-<pre><code class="language-bash">docker run --restart=always --network host -v /etc/frp/frps.ini:/etc/frp/frps.ini --name frps -d ryaning/frps
+<pre class="line-numbers"><code class="language-bash">docker run --restart=always --network host -v /etc/frp/frps.ini:/etc/frp/frps.ini --name frps -d ryaning/frps
 </code></pre>
 
 <h3 id="toc_4">客户端配置文件</h3>
 
-<pre><code class="language-text">mkdir -p /etc/frp/
+<pre class="line-numbers"><code class="language-text">mkdir -p /etc/frp/
 touch /etc/frp/frpc.ini
 
 cat &gt; /etc/frp/frpc.ini &lt;&lt; EOF
@@ -163,198 +137,51 @@ EOF
 
 <h3 id="toc_5">启动frp客户端</h3>
 
-<pre><code class="language-text">docker run --restart=always --network host -v /etc/frp/frpc.ini:/etc/frp/frpc.ini --name frpc -d ryaning/frpc
+<pre class="line-numbers"><code class="language-text">docker run --restart=always --network host -v /etc/frp/frpc.ini:/etc/frp/frpc.ini --name frpc -d ryaning/frpc
 </code></pre>
 
 <h3 id="toc_6">命令说明</h3>
 
-<pre><code class="language-text">--restart=always #当 docker 重启时，容器自动启动。
+<pre class="line-numbers"><code class="language-text">--restart=always #当 docker 重启时，容器自动启动。
 --network host #容器使用宿主机的网络，指定我们的网络模式为host，这样我们访问本机的端口就能访问到我们的容器。
 </code></pre>
 
-
-		</div>
-
-		
-
-	</article>
- 
-	<article>
-		 <header>
-		  	<h1 class="entry-title"><a href="16118468907007.html">iCloud 与 Google one 云存储价格对比</a></h1>
-			<p class="meta"><time datetime="2021-01-28T23:14:50+08:00" 
-			pubdate data-updated="true">2021/01/28</time></p>
-		 </header>
-	  	<div class="entry-content">
-		  	
-		  	<table>
-<thead>
-<tr>
-<th>云存储提供商</th>
-<th>容量</th>
-<th>价格</th>
-<th>RMB/1GB</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td>iCloud</td>
-<td>50GB</td>
-<td>6</td>
-<td>6/50 = 0.12</td>
-</tr>
-<tr>
-<td>Google Drive</td>
-<td>100GB</td>
-<td>14</td>
-<td>14/100 = 0.14</td>
-</tr>
-</tbody>
-</table>
-
-
-		</div>
+			</div>
 
 		
+	  
+		<footer>
+		 <p class="meta">
 
-	</article>
- 
-	<article>
-		 <header>
-		  	<h1 class="entry-title"><a href="16110498124743.html">💾Tensorflow 持久化和读取模型</a></h1>
-			<p class="meta"><time datetime="2021-01-19T17:50:12+08:00" 
-			pubdate data-updated="true">2021/01/19</time></p>
-		 </header>
-	  	<div class="entry-content">
-		  	
-		  	<pre><code class="language-python"> self.checkpoint = tf.train.Checkpoint(
-      optimizer=self.optimizer,
-      encoder=self.encoder,
-      decoder=self.decoder
-)
-self.checkpoint_prefix = os.path.join(self.args.checkpoint_dir, &quot;ckpt&quot;)
-self.checkpoint_dir = self.args.checkpoint_dir
-self.ckpt_manager = tf.train.CheckpointManager(self.checkpoint, directory=self.checkpoint_dir, max_to_keep=3)
-</code></pre>
-
-
-		</div>
-
-		
-
-	</article>
- 
-	<article>
-		 <header>
-		  	<h1 class="entry-title"><a href="16110375340640.html">🕺使用Docker 快速建立samba服务</a></h1>
-			<p class="meta"><time datetime="2021-01-19T14:25:34+08:00" 
-			pubdate data-updated="true">2021/01/19</time></p>
-		 </header>
-	  	<div class="entry-content">
-		  	
-		  	<h2 id="toc_0">快速架设 samba</h2>
-
-<pre><code class="language-bash">sudo docker run -it -p 139:139 -p 445:445 -v /home/tony/D:/share -d dperson/samba -s &quot;public;/share&quot;
-</code></pre>
-
-<h2 id="toc_1">加上用户名认证</h2>
-
-<pre><code class="language-bash">sudo docker run -it --name samba -p 139:139 -p 445:445 -v /home/tony/:/share -d dperson/samba -u &quot;tony;woshixushuli&quot; -s &quot;public;/share;yes;no;no;tony;tony;;comment&quot;
-</code></pre>
-
-
-		</div>
-
-		
-
-	</article>
- 
-	<article>
-		 <header>
-		  	<h1 class="entry-title"><a href="16109774856114.html">💻Docker Openwrt 配置 @小米/红米路由器</a></h1>
-			<p class="meta"><time datetime="2021-01-18T21:44:45+08:00" 
-			pubdate data-updated="true">2021/01/18</time></p>
-		 </header>
-	  	<div class="entry-content">
-		  	
-		  	<h2 id="toc_0">创建网络和container</h2>
-
-<pre><code class="language-bash">#检查接口名称, 找到通公网的网卡
-ip -c a 
-
-#enp3s0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast #state UP group default qlen 1000
-#    link/ether d8:cb:8a:79:14:18 brd ff:ff:ff:ff:ff:ff
-#    inet 192.168.16.15/24 brd 192.168.16.255 scope global #noprefixroute enp3s0
-#       valid_lft forever preferred_lft forever
-#    inet 222.197.219.15/24 brd 222.197.219.255 scope global enp3s0
-#       valid_lft forever preferred_lft forever
-#    inet6 fe80::6ad9:1262:60:eb2e/64 scope link noprefixroute 
-#       valid_lft forever preferred_lft forever
-
-#现将网卡设为混杂模式
-sudo ip link set enp3s0 promisc on 
-
-#创建名为macvlan的网络, 这里的192.168.31.0/24 要换成网卡对应的网段
-#192.168.31.0/24 是设备所在物理子网
-sudo docker network create -d macvlan --subnet=192.168.31.0/24 --gateway=192.168.31.1 -o parent=enp3s0 macnet
-
-#获取openwrt镜像，tag：x86_64为intel平台, latest是arm64平台
-sudo docker run --restart always --name openwrt -d --network macnet --privileged registry.cn-shanghai.aliyuncs.com/suling/openwrt:x86_64 /sbin/init
-</code></pre>
-
-<h2 id="toc_1">更改container内部的网络</h2>
-
-<pre><code class="language-bash">sudo docker exec -it openwrt bash
-vi /etc/config/network
-</code></pre>
-
-<h2 id="toc_2">修改lan接口</h2>
-
-<p>将lan接口改为， 本文所有的192.168.31.* 要改成网关主机对应网段，这里设置一个不会和子网其他主机冲突的ip，这里设置为192.168.31.34。</p>
-
-<pre><code class="language-text">config interface &#39;lan&#39;
-        option ifname &#39;eth0&#39;
-        option proto &#39;static&#39;
-        option ipaddr &#39;192.168.31.34&#39;
-        option netmask &#39;255.255.255.0&#39;
-        option ip6assign &#39;60&#39;
-        option gateway &#39;192.168.31.1&#39;
-        option broadcast &#39;192.168.31.255&#39;
-        option dns &#39;192.168.31.1&#39;
-</code></pre>
-
-<p>重启容器内的网络服务</p>
-
-<pre><code class="language-bash">/etc/init.d/network restart
-</code></pre>
-
-<p>为容器内root用户设置密码，重复输入两次密码即可，后面WEB后台的root的登录密码就是这里设置的密码。</p>
-
-<pre><code class="language-bash">passwd root
-</code></pre>
-
-<p>然后就可以通过浏览器访问容器内设置IP地址访问openwrt的<a href="http://192.168.31.34">WEB后台</a>, 密码就是在容器内的bash里设置的密码，打开管理后台，在服务passwall中配置机场信息，配置完成后将需要翻墙的网段内其他主机的网关设为192.168.31.34即可翻墙。</p>
-
-<p>passwall配置负载均衡即可利用多节点翻墙进行爬虫，教程参见<a href="https://www.right.com.cn/forum/thread-2372737-1-1.html">passwall负载均衡教程</a>。</p>
-
-<h2 id="toc_3">参考文献</h2>
-
-<p><a href="https://mlapp.cn/376.html">在Docker 中运行 OpenWrt 旁路网关</a></p>
-
-
-		</div>
-
-		
-
-	</article>
-  
-	<div class="pagination">
-	
-<a href="archives.html">Blog Archives</a>
-	 
+			
+			<span class="categories">
+			 
+			</span>
+		    </p>
+		    <p class="meta">
+		      
+		 </p>
 	    
-	</div>
+		<div class="sharing">
+		  
+          
+
+          
+
+		</div>
+
+	    <p class="meta">
+	    
+	        <a class="basic-alignment left" href="16133412208066.html" 
+	        title="Previous Post: ubuntu20.04 关闭/开启图形界面">&laquo; ubuntu20.04 关闭/开启图形界面</a>
+	    
+	    
+	        <a class="basic-alignment right" href="16118468907007.html" 
+	        title="Next Post: iCloud 与 Google one 云存储价格对比">iCloud 与 Google one 云存储价格对比 &raquo;</a>
+	    
+	    </p>
+	  </footer>
+	</article>
 </div>
  <aside class="sidebar"> 
 
@@ -429,6 +256,8 @@ vi /etc/config/network
 
 
 
+
+<script src="asset/prism.js"></script>
 
 
 <style type="text/css">

@@ -4,7 +4,7 @@
   <title><![CDATA[Mose]]></title>
   <link href="xushulitony.github.io/atom.xml" rel="self"/>
   <link href="xushulitony.github.io/"/>
-  <updated>2021-04-09T04:44:22+08:00</updated>
+  <updated>2021-04-09T05:17:58+08:00</updated>
   <id>xushulitony.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -46,19 +46,19 @@ sudo reboot</p>
 
 <p>frp server</p>
 
-<pre><code class="language-bash">docker pull ryaning/frps
+<pre class="line-numbers"><code class="language-bash">docker pull ryaning/frps
 </code></pre>
 
 <p>frp client</p>
 
-<pre><code class="language-bash">docker pull ryaning/frpc
+<pre class="line-numbers"><code class="language-bash">docker pull ryaning/frpc
 </code></pre>
 
 <h2 id="toc_1">使用</h2>
 
 <h3 id="toc_2">服务器配置文件</h3>
 
-<pre><code class="language-text">mkdir -p /etc/frp/
+<pre class="line-numbers"><code class="language-text">mkdir -p /etc/frp/
 touch /etc/frp/frps.ini
 
 cat &gt; /etc/frp/frps.ini &lt;&lt; EOF
@@ -69,12 +69,12 @@ EOF
 
 <h3 id="toc_3">启动服务端</h3>
 
-<pre><code class="language-bash">docker run --restart=always --network host -v /etc/frp/frps.ini:/etc/frp/frps.ini --name frps -d ryaning/frps
+<pre class="line-numbers"><code class="language-bash">docker run --restart=always --network host -v /etc/frp/frps.ini:/etc/frp/frps.ini --name frps -d ryaning/frps
 </code></pre>
 
 <h3 id="toc_4">客户端配置文件</h3>
 
-<pre><code class="language-text">mkdir -p /etc/frp/
+<pre class="line-numbers"><code class="language-text">mkdir -p /etc/frp/
 touch /etc/frp/frpc.ini
 
 cat &gt; /etc/frp/frpc.ini &lt;&lt; EOF
@@ -92,12 +92,12 @@ EOF
 
 <h3 id="toc_5">启动frp客户端</h3>
 
-<pre><code class="language-text">docker run --restart=always --network host -v /etc/frp/frpc.ini:/etc/frp/frpc.ini --name frpc -d ryaning/frpc
+<pre class="line-numbers"><code class="language-text">docker run --restart=always --network host -v /etc/frp/frpc.ini:/etc/frp/frpc.ini --name frpc -d ryaning/frpc
 </code></pre>
 
 <h3 id="toc_6">命令说明</h3>
 
-<pre><code class="language-text">--restart=always #当 docker 重启时，容器自动启动。
+<pre class="line-numbers"><code class="language-text">--restart=always #当 docker 重启时，容器自动启动。
 --network host #容器使用宿主机的网络，指定我们的网络模式为host，这样我们访问本机的端口就能访问到我们的容器。
 </code></pre>
 
@@ -145,7 +145,7 @@ EOF
     <updated>2021-01-19T17:50:12+08:00</updated>
     <id>xushulitony.github.io/16110498124743.html</id>
     <content type="html"><![CDATA[
-<pre><code class="language-python"> self.checkpoint = tf.train.Checkpoint(
+<pre class="line-numbers"><code class="language-python"> self.checkpoint = tf.train.Checkpoint(
       optimizer=self.optimizer,
       encoder=self.encoder,
       decoder=self.decoder
@@ -166,12 +166,12 @@ self.ckpt_manager = tf.train.CheckpointManager(self.checkpoint, directory=self.c
     <content type="html"><![CDATA[
 <h2 id="toc_0">快速架设 samba</h2>
 
-<pre><code class="language-bash">sudo docker run -it -p 139:139 -p 445:445 -v /home/tony/D:/share -d dperson/samba -s &quot;public;/share&quot;
+<pre class="line-numbers"><code class="language-bash">sudo docker run -it -p 139:139 -p 445:445 -v /home/tony/D:/share -d dperson/samba -s &quot;public;/share&quot;
 </code></pre>
 
 <h2 id="toc_1">加上用户名认证</h2>
 
-<pre><code class="language-bash">sudo docker run -it --name samba -p 139:139 -p 445:445 -v /home/tony/:/share -d dperson/samba -u &quot;tony;woshixushuli&quot; -s &quot;public;/share;yes;no;no;tony;tony;;comment&quot;
+<pre class="line-numbers"><code class="language-bash">sudo docker run -it --name samba -p 139:139 -p 445:445 -v /home/tony/:/share -d dperson/samba -u &quot;tony;woshixushuli&quot; -s &quot;public;/share;yes;no;no;tony;tony;;comment&quot;
 </code></pre>
 
 ]]></content>
@@ -185,7 +185,7 @@ self.ckpt_manager = tf.train.CheckpointManager(self.checkpoint, directory=self.c
     <content type="html"><![CDATA[
 <h2 id="toc_0">创建网络和container</h2>
 
-<pre><code class="language-bash">#检查接口名称, 找到通公网的网卡
+<pre class="line-numbers"><code class="language-bash">#检查接口名称, 找到通公网的网卡
 ip -c a 
 
 #enp3s0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast #state UP group default qlen 1000
@@ -210,7 +210,7 @@ sudo docker run --restart always --name openwrt -d --network macnet --privileged
 
 <h2 id="toc_1">更改container内部的网络</h2>
 
-<pre><code class="language-bash">sudo docker exec -it openwrt bash
+<pre class="line-numbers"><code class="language-bash">sudo docker exec -it openwrt bash
 vi /etc/config/network
 </code></pre>
 
@@ -218,7 +218,7 @@ vi /etc/config/network
 
 <p>将lan接口改为， 本文所有的192.168.31.* 要改成网关主机对应网段，这里设置一个不会和子网其他主机冲突的ip，这里设置为192.168.31.34。</p>
 
-<pre><code class="language-text">config interface &#39;lan&#39;
+<pre class="line-numbers"><code class="language-text">config interface &#39;lan&#39;
         option ifname &#39;eth0&#39;
         option proto &#39;static&#39;
         option ipaddr &#39;192.168.31.34&#39;
@@ -231,12 +231,12 @@ vi /etc/config/network
 
 <p>重启容器内的网络服务</p>
 
-<pre><code class="language-bash">/etc/init.d/network restart
+<pre class="line-numbers"><code class="language-bash">/etc/init.d/network restart
 </code></pre>
 
 <p>为容器内root用户设置密码，重复输入两次密码即可，后面WEB后台的root的登录密码就是这里设置的密码。</p>
 
-<pre><code class="language-bash">passwd root
+<pre class="line-numbers"><code class="language-bash">passwd root
 </code></pre>
 
 <p>然后就可以通过浏览器访问容器内设置IP地址访问openwrt的<a href="http://192.168.31.34">WEB后台</a>, 密码就是在容器内的bash里设置的密码，打开管理后台，在服务passwall中配置机场信息，配置完成后将需要翻墙的网段内其他主机的网关设为192.168.31.34即可翻墙。</p>

@@ -12,7 +12,7 @@
 
   </title>
   <meta name="author" content="">
-  <meta name="description" content="Personal Website">
+  <meta name="description" content="Technique worth spreding">
 
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
@@ -46,7 +46,7 @@ $(document).ready(function(event) {
   <header role="banner"><hgroup>
   <h1><a href="index.html">Mose</a></h1>
   
-    <h2>Personal Website</h2>
+    <h2>Technique worth spreding</h2>
   
 </hgroup>
 
@@ -65,9 +65,11 @@ $(document).ready(function(event) {
   
 <ul class="main-navigation">
 
-  <li id=""><a target="self" href="index.html">Home</a></li>
+  <li id=""><a target="_self" href="index.html">Home</a></li>
 
   <li id=""><a target="_self" href="archives.html">Archives</a></li>
+
+  <li id=""><a target="_self" href="me.html">Me</a></li>
 
 </ul>
 
@@ -83,7 +85,7 @@ $(document).ready(function(event) {
 		  	<div class="entry-content">
 			  	<h2 id="toc_0">创建网络和container</h2>
 
-<pre><code class="language-bash">#检查接口名称, 找到通公网的网卡
+<pre class="line-numbers"><code class="language-bash">#检查接口名称, 找到通公网的网卡
 ip -c a 
 
 #enp3s0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast #state UP group default qlen 1000
@@ -108,7 +110,7 @@ sudo docker run --restart always --name openwrt -d --network macnet --privileged
 
 <h2 id="toc_1">更改container内部的网络</h2>
 
-<pre><code class="language-bash">sudo docker exec -it openwrt bash
+<pre class="line-numbers"><code class="language-bash">sudo docker exec -it openwrt bash
 vi /etc/config/network
 </code></pre>
 
@@ -116,7 +118,7 @@ vi /etc/config/network
 
 <p>将lan接口改为， 本文所有的192.168.31.* 要改成网关主机对应网段，这里设置一个不会和子网其他主机冲突的ip，这里设置为192.168.31.34。</p>
 
-<pre><code class="language-text">config interface &#39;lan&#39;
+<pre class="line-numbers"><code class="language-text">config interface &#39;lan&#39;
         option ifname &#39;eth0&#39;
         option proto &#39;static&#39;
         option ipaddr &#39;192.168.31.34&#39;
@@ -129,12 +131,12 @@ vi /etc/config/network
 
 <p>重启容器内的网络服务</p>
 
-<pre><code class="language-bash">/etc/init.d/network restart
+<pre class="line-numbers"><code class="language-bash">/etc/init.d/network restart
 </code></pre>
 
 <p>为容器内root用户设置密码，重复输入两次密码即可，后面WEB后台的root的登录密码就是这里设置的密码。</p>
 
-<pre><code class="language-bash">passwd root
+<pre class="line-numbers"><code class="language-bash">passwd root
 </code></pre>
 
 <p>然后就可以通过浏览器访问容器内设置IP地址访问openwrt的<a href="http://192.168.31.34">WEB后台</a>, 密码就是在容器内的bash里设置的密码，打开管理后台，在服务passwall中配置机场信息，配置完成后将需要翻墙的网段内其他主机的网关设为192.168.31.34即可翻墙。</p>

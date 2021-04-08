@@ -7,12 +7,12 @@
   <meta charset="utf-8">
   <title>
     
-  🕺使用Docker 快速建立samba服务 - Mose
+  iCloud 与 Google one 云存储价格对比 - Mose
   
 
   </title>
   <meta name="author" content="">
-  <meta name="description" content="Personal Website">
+  <meta name="description" content="Technique worth spreding">
 
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
@@ -46,7 +46,7 @@ $(document).ready(function(event) {
   <header role="banner"><hgroup>
   <h1><a href="index.html">Mose</a></h1>
   
-    <h2>Personal Website</h2>
+    <h2>Technique worth spreding</h2>
   
 </hgroup>
 
@@ -65,9 +65,11 @@ $(document).ready(function(event) {
   
 <ul class="main-navigation">
 
-  <li id=""><a target="self" href="index.html">Home</a></li>
+  <li id=""><a target="_self" href="index.html">Home</a></li>
 
   <li id=""><a target="_self" href="archives.html">Archives</a></li>
+
+  <li id=""><a target="_self" href="me.html">Me</a></li>
 
 </ul>
 
@@ -77,19 +79,35 @@ $(document).ready(function(event) {
 <div>
 	<article class="hentry" role="article">
 	<header>
-			  	<h1 class="entry-title">🕺使用Docker 快速建立samba服务</h1>
-				<p class="meta"><time datetime="2021-01-19T14:25:34+08:00" pubdate data-updated="true">2021/01/19</time></p>
+			  	<h1 class="entry-title">iCloud 与 Google one 云存储价格对比</h1>
+				<p class="meta"><time datetime="2021-01-28T23:14:50+08:00" pubdate data-updated="true">2021/01/28</time></p>
 			 </header>
 		  	<div class="entry-content">
-			  	<h2 id="toc_0">快速架设 samba</h2>
+			  	<table>
+<thead>
+<tr>
+<th>云存储提供商</th>
+<th>容量</th>
+<th>价格</th>
+<th>RMB/1GB</th>
+</tr>
+</thead>
 
-<pre><code class="language-bash">sudo docker run -it -p 139:139 -p 445:445 -v /home/tony/D:/share -d dperson/samba -s &quot;public;/share&quot;
-</code></pre>
-
-<h2 id="toc_1">加上用户名认证</h2>
-
-<pre><code class="language-bash">sudo docker run -it --name samba -p 139:139 -p 445:445 -v /home/tony/:/share -d dperson/samba -u &quot;tony;woshixushuli&quot; -s &quot;public;/share;yes;no;no;tony;tony;;comment&quot;
-</code></pre>
+<tbody>
+<tr>
+<td>iCloud</td>
+<td>50GB</td>
+<td>6</td>
+<td>6/50 = 0.12</td>
+</tr>
+<tr>
+<td>Google Drive</td>
+<td>100GB</td>
+<td>14</td>
+<td>14/100 = 0.14</td>
+</tr>
+</tbody>
+</table>
 
 			</div>
 
@@ -117,12 +135,12 @@ $(document).ready(function(event) {
 
 	    <p class="meta">
 	    
-	        <a class="basic-alignment left" href="16110498124743.html" 
-	        title="Previous Post: 💾Tensorflow 持久化和读取模型">&laquo; 💾Tensorflow 持久化和读取模型</a>
+	        <a class="basic-alignment left" href="16122988687455.html" 
+	        title="Previous Post: 配置frp进行内网穿透">&laquo; 配置frp进行内网穿透</a>
 	    
 	    
-	        <a class="basic-alignment right" href="16109774856114.html" 
-	        title="Next Post: 💻Docker Openwrt 配置 @小米/红米路由器">💻Docker Openwrt 配置 @小米/红米路由器 &raquo;</a>
+	        <a class="basic-alignment right" href="16110498124743.html" 
+	        title="Next Post: 💾Tensorflow 持久化和读取模型">💾Tensorflow 持久化和读取模型 &raquo;</a>
 	    
 	    </p>
 	  </footer>
@@ -201,8 +219,6 @@ $(document).ready(function(event) {
 
 
 
-
-<script src="asset/prism.js"></script>
 
 
 <style type="text/css">
