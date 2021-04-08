@@ -1,0 +1,462 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>
+    
+  💻Docker Openwrt 配置 @小米/红米路由器 - Mose
+  
+
+  </title>
+  <meta name="author" content="">
+  <meta name="description" content="Personal Website">
+
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link href="asset/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="atom.xml" rel="alternate" title="Mose" type="application/atom+xml">
+  <script src="asset/js/modernizr-2.0.js"></script>
+  <script src="asset/js/jquery.min.js"></script>
+  <style type="text/css">
+  .cat-children-p{ padding: 6px 0px;}
+  .hljs{background: none;}
+  </style>
+  <script type="text/javascript">
+  var isAddSildbar = true;
+  </script>
+  <script src="asset/js/octopress.js" type="text/javascript"></script>
+</head>
+<script type="text/javascript">
+//链接新开窗口
+function addBlankTargetForLinks () {
+  $('a[href^="http"]').each(function(){
+      $(this).attr('target', '_blank');
+  });
+}
+$(document).ready(function(event) {
+  addBlankTargetForLinks();
+});
+</script>
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="index.html">Mose</a></h1>
+  
+    <h2>Personal Website</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:xushulitony.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+
+  <li id=""><a target="self" href="index.html">Home</a></li>
+
+  <li id=""><a target="_self" href="archives.html">Archives</a></li>
+
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content"> 
+<div>
+	<article class="hentry" role="article">
+	<header>
+			  	<h1 class="entry-title">💻Docker Openwrt 配置 @小米/红米路由器</h1>
+				<p class="meta"><time datetime="2021-01-18T21:44:45+08:00" pubdate data-updated="true">2021/01/18</time></p>
+			 </header>
+		  	<div class="entry-content">
+			  	<h2 id="toc_0">创建网络和container</h2>
+
+<pre><code class="language-bash">#检查接口名称, 找到通公网的网卡
+ip -c a 
+
+#enp3s0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast #state UP group default qlen 1000
+#    link/ether d8:cb:8a:79:14:18 brd ff:ff:ff:ff:ff:ff
+#    inet 192.168.16.15/24 brd 192.168.16.255 scope global #noprefixroute enp3s0
+#       valid_lft forever preferred_lft forever
+#    inet 222.197.219.15/24 brd 222.197.219.255 scope global enp3s0
+#       valid_lft forever preferred_lft forever
+#    inet6 fe80::6ad9:1262:60:eb2e/64 scope link noprefixroute 
+#       valid_lft forever preferred_lft forever
+
+#现将网卡设为混杂模式
+sudo ip link set enp3s0 promisc on 
+
+#创建名为macvlan的网络, 这里的192.168.31.0/24 要换成网卡对应的网段
+#192.168.31.0/24 是设备所在物理子网
+sudo docker network create -d macvlan --subnet=192.168.31.0/24 --gateway=192.168.31.1 -o parent=enp3s0 macnet
+
+#获取openwrt镜像，tag：x86_64为intel平台, latest是arm64平台
+sudo docker run --restart always --name openwrt -d --network macnet --privileged registry.cn-shanghai.aliyuncs.com/suling/openwrt:x86_64 /sbin/init
+</code></pre>
+
+<h2 id="toc_1">更改container内部的网络</h2>
+
+<pre><code class="language-bash">sudo docker exec -it openwrt bash
+vi /etc/config/network
+</code></pre>
+
+<h2 id="toc_2">修改lan接口</h2>
+
+<p>将lan接口改为， 本文所有的192.168.31.* 要改成网关主机对应网段，这里设置一个不会和子网其他主机冲突的ip，这里设置为192.168.31.34。</p>
+
+<pre><code class="language-text">config interface &#39;lan&#39;
+        option ifname &#39;eth0&#39;
+        option proto &#39;static&#39;
+        option ipaddr &#39;192.168.31.34&#39;
+        option netmask &#39;255.255.255.0&#39;
+        option ip6assign &#39;60&#39;
+        option gateway &#39;192.168.31.1&#39;
+        option broadcast &#39;192.168.31.255&#39;
+        option dns &#39;192.168.31.1&#39;
+</code></pre>
+
+<p>重启容器内的网络服务</p>
+
+<pre><code class="language-bash">/etc/init.d/network restart
+</code></pre>
+
+<p>为容器内root用户设置密码，重复输入两次密码即可，后面WEB后台的root的登录密码就是这里设置的密码。</p>
+
+<pre><code class="language-bash">passwd root
+</code></pre>
+
+<p>然后就可以通过浏览器访问容器内设置IP地址访问openwrt的<a href="http://192.168.31.34">WEB后台</a>, 密码就是在容器内的bash里设置的密码，打开管理后台，在服务passwall中配置机场信息，配置完成后将需要翻墙的网段内其他主机的网关设为192.168.31.34即可翻墙。</p>
+
+<p>passwall配置负载均衡即可利用多节点翻墙进行爬虫，教程参见<a href="https://www.right.com.cn/forum/thread-2372737-1-1.html">passwall负载均衡教程</a>。</p>
+
+<h2 id="toc_3">参考文献</h2>
+
+<p><a href="https://mlapp.cn/376.html">在Docker 中运行 OpenWrt 旁路网关</a></p>
+
+			</div>
+
+		
+	  
+		<footer>
+		 <p class="meta">
+
+			
+			<span class="categories">
+			 
+			</span>
+		    </p>
+		    <p class="meta">
+		      
+		 </p>
+	    
+		<div class="sharing">
+		  
+          
+
+          
+
+		</div>
+
+	    <p class="meta">
+	    
+	        <a class="basic-alignment left" href="16110375340640.html" 
+	        title="Previous Post: 🕺使用Docker 快速建立samba服务">&laquo; 🕺使用Docker 快速建立samba服务</a>
+	    
+	    
+	    </p>
+	  </footer>
+	</article>
+</div>
+ <aside class="sidebar"> 
+
+	<section>
+	  <h1>Categories</h1>
+	  <ul id="recent_posts">
+	  
+	        
+	      </li>
+	   
+	  </ul>
+	</section>
+	<section>
+	  <h1>Recent Posts</h1>
+	  <ul id="recent_posts">
+	  
+	      
+		      <li class="post">
+		        <a href="16133412208066.html">ubuntu20.04 关闭/开启图形界面</a>
+		      </li>
+	     
+	  
+	      
+		      <li class="post">
+		        <a href="16122988687455.html">配置frp进行内网穿透</a>
+		      </li>
+	     
+	  
+	      
+		      <li class="post">
+		        <a href="16118468907007.html">iCloud 与 Google one 云存储价格对比</a>
+		      </li>
+	     
+	  
+	      
+		      <li class="post">
+		        <a href="16110498124743.html">💾Tensorflow 持久化和读取模型</a>
+		      </li>
+	     
+	  
+	      
+		      <li class="post">
+		        <a href="16110375340640.html">🕺使用Docker 快速建立samba服务</a>
+		      </li>
+	     
+	  
+	      
+	   
+	  </ul>
+	</section>
+	
+</aside> </div></div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 -  -
+  <span class="credit">Powered by <a target="_blank" href="http://www.mweb.im">MWeb</a> &nbsp;&nbsp; Theme by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="asset/prism.js"></script>
+
+
+<style type="text/css">
+  
+/* PrismJS 1.14.0
+https://prismjs.com/download.html#themes=prism-solarizedlight&languages=markup+css+clike+javascript */
+/*
+ Solarized Color Schemes originally by Ethan Schoonover
+ http://ethanschoonover.com/solarized
+
+ Ported for PrismJS by Hector Matos
+ Website: https://krakendev.io
+ Twitter Handle: https://twitter.com/allonsykraken)
+*/
+
+/*
+SOLARIZED HEX
+--------- -------
+base03    #002b36
+base02    #073642
+base01    #586e75
+base00    #657b83
+base0     #839496
+base1     #93a1a1
+base2     #eee8d5
+base3     #fdf6e3
+yellow    #b58900
+orange    #cb4b16
+red       #dc322f
+magenta   #d33682
+violet    #6c71c4
+blue      #268bd2
+cyan      #2aa198
+green     #859900
+*/
+
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #657b83; /* base00 */
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
+code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
+  background: #073642; /* base02 */
+}
+
+pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
+code[class*="language-"]::selection, code[class*="language-"] ::selection {
+  background: #073642; /* base02 */
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: 1em;
+  margin: .5em 0;
+  overflow: auto;
+  border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+  background-color: #fdf6e3; /* base3 */
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #93a1a1; /* base1 */
+}
+
+.token.punctuation {
+  color: #586e75; /* base01 */
+}
+
+.namespace {
+  opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #268bd2; /* blue */
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.url,
+.token.inserted {
+  color: #2aa198; /* cyan */
+}
+
+.token.entity {
+  color: #657b83; /* base00 */
+  background: #eee8d5; /* base2 */
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #859900; /* green */
+}
+
+.token.function,
+.token.class-name {
+  color: #b58900; /* yellow */
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #cb4b16; /* orange */
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+.token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+
+pre[class*="language-"].line-numbers {
+    position: relative;
+    padding-left: 3.8em;
+    counter-reset: linenumber;
+}
+
+pre[class*="language-"].line-numbers > code {
+    position: relative;
+    white-space: inherit;
+}
+
+.line-numbers .line-numbers-rows {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    font-size: 100%;
+    left: -3.8em;
+    width: 3em; /* works for line-numbers below 1000 lines */
+    letter-spacing: -1px;
+    border-right: 1px solid #999;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+}
+
+    .line-numbers-rows > span {
+        pointer-events: none;
+        display: block;
+        counter-increment: linenumber;
+    }
+
+        .line-numbers-rows > span:before {
+            content: counter(linenumber);
+            color: #999;
+            display: block;
+            padding-right: 0.8em;
+            text-align: right;
+        }
+
+</style>
+  
+    
+
+
+</body>
+</html>
