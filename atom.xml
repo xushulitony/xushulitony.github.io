@@ -4,7 +4,7 @@
   <title><![CDATA[Mose]]></title>
   <link href="xushulitony.github.io/atom.xml" rel="self"/>
   <link href="xushulitony.github.io/"/>
-  <updated>2021-04-09T05:28:12+08:00</updated>
+  <updated>2021-04-25T03:14:48+08:00</updated>
   <id>xushulitony.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -12,6 +12,66 @@
   </author>
   <generator uri="http://www.coderforart.com/">CoderForArt</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Updog 可以替代 SimpleHTTPServer]]></title>
+    <link href="xushulitony.github.io/16187572688821.html"/>
+    <updated>2021-04-18T22:47:48+08:00</updated>
+    <id>xushulitony.github.io/16187572688821.html</id>
+    <content type="html"><![CDATA[
+<p>Updog让在局域网内跨平台传输文件变得简单。</p>
+
+<pre class="line-numbers"><code class="language-bash">pip install updog
+
+updog -d . --port 10000 --password 123456
+
+open http://localhost:10000
+</code></pre>
+
+<h2 id="toc_0">介绍</h2>
+
+<p>是Python的替代品SimpleHTTPServer。它允许通过HTTP/S 进行上传和下载，可以设置临时SSL证书并使用HTTP基本身份验证。</p>
+
+<h2 id="toc_1">参数</h2>
+
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>-d DIRECTORY, --directory DIRECTORY</td>
+<td>Root directory [Default=.]</td>
+</tr>
+<tr>
+<td>-p PORT, --port PORT</td>
+<td>Port to serve [Default=9090]</td>
+</tr>
+<tr>
+<td>--password PASSWORD</td>
+<td>Use a password to access the page. (No username)</td>
+</tr>
+<tr>
+<td>--ssl</td>
+<td>Enable transport encryption via SSL</td>
+</tr>
+<tr>
+<td>--version</td>
+<td>Show version</td>
+</tr>
+<tr>
+<td>-h, --help</td>
+<td>Show help</td>
+</tr>
+</tbody>
+</table>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[docker 导出image]]></title>
@@ -153,7 +213,7 @@ EOF
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[💾Tensorflow 持久化和读取模型]]></title>
+    <title type="html"><![CDATA[Tensorflow 持久化和读取模型]]></title>
     <link href="xushulitony.github.io/16110498124743.html"/>
     <updated>2021-01-19T17:50:12+08:00</updated>
     <id>xushulitony.github.io/16110498124743.html</id>
@@ -172,7 +232,7 @@ self.ckpt_manager = tf.train.CheckpointManager(self.checkpoint, directory=self.c
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[🕺使用Docker 快速建立samba服务]]></title>
+    <title type="html"><![CDATA[使用Docker 快速建立samba服务]]></title>
     <link href="xushulitony.github.io/16110375340640.html"/>
     <updated>2021-01-19T14:25:34+08:00</updated>
     <id>xushulitony.github.io/16110375340640.html</id>
@@ -191,7 +251,7 @@ self.ckpt_manager = tf.train.CheckpointManager(self.checkpoint, directory=self.c
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[💻Docker Openwrt 配置 @小米/红米路由器]]></title>
+    <title type="html"><![CDATA[Docker Openwrt 配置 @小米/红米路由器]]></title>
     <link href="xushulitony.github.io/16109774856114.html"/>
     <updated>2021-01-18T21:44:45+08:00</updated>
     <id>xushulitony.github.io/16109774856114.html</id>
