@@ -4,7 +4,7 @@
   <title><![CDATA[Mose]]></title>
   <link href="xushulitony.github.io/atom.xml" rel="self"/>
   <link href="xushulitony.github.io/"/>
-  <updated>2021-04-25T03:14:48+08:00</updated>
+  <updated>2021-08-04T09:53:48+08:00</updated>
   <id>xushulitony.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -244,7 +244,7 @@ self.ckpt_manager = tf.train.CheckpointManager(self.checkpoint, directory=self.c
 
 <h2 id="toc_1">加上用户名认证</h2>
 
-<pre class="line-numbers"><code class="language-bash">sudo docker run -it --name samba -p 139:139 -p 445:445 -v /home/tony/:/share -d dperson/samba -u &quot;tony;woshixushuli&quot; -s &quot;public;/share;yes;no;no;tony;tony;;comment&quot;
+<pre class="line-numbers"><code class="language-bash">sudo docker run -it --name samba -p 139:139 -p 445:445 -v /home/tony/:/share -d dperson/samba -u &quot;user;password&quot; -s &quot;public;/share;yes;no;no;tony;tony;;comment&quot;
 </code></pre>
 
 ]]></content>
