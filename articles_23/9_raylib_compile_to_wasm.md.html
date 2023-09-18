@@ -1,0 +1,24 @@
+<meta charset="utf-8">
+
+**Raylib 编译为WASM**
+
+1. 克隆raylib的官方仓库
+	然后直接在examples里改，examples的cmakelist里有一个example_dirs变量，把其他都删掉，加上自己的子目录，然后在里边写c文件就可以编译， 具体编译流程如下。
+
+2. 安装emsdk和激活环境以及编译的命令：
+	~~~bash
+	git clone https://github.com/emscripten-core/emsdk.git
+	./emsdk/emsdk install latest
+	./emsdk/emsdk activate latest
+	source ./emsdk/emsdk_env.sh
+	emcmake cmake -S . -B build -DPLATFORM=Web
+	cmake --build build
+	~~~
+
+3. 参考文献：
+	- https://thatonegamedev.com/cpp/programming-a-c-game-for-the-web-emscripten/
+	- https://cloud.tencent.com/developer/news/690454
+	- https://github.com/raysan5/raylib
+	- https://github.com/emscripten-core/emsdk.git
+
+<!-- Markdeep: --><style class="fallback">body{visibility:hidden;white-space:pre;font-family:monospace}</style><script src="markdeep.min.js" charset="utf-8"></script><script src="https://morgan3d.github.io/markdeep/latest/markdeep.min.js" charset="utf-8"></script><script>window.alreadyProcessedMarkdeep||(document.body.style.visibility="visible")</script>
